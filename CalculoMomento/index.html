@@ -1,0 +1,128 @@
+html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Momento Resistente - Proyecto Energía</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Proyecto Energía</h1>
+            <nav>
+                <ul>
+                    <li><a href="../index.php">Inicio</a></li>
+                    <li><a href="../Calculadora/calculadora.html">Calculadora de Ahorro</a></li>
+                    <li><a href="../Encuesta/encuesta.html">Encuesta</a></li>
+                    <li><a href="../contacto.html">Contacto</a></li>
+                    <li class="active"><a href="#">Calcular Momento</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="calculo-container">
+                <h2>Calculadora de Momento Resistente en Vigas</h2>
+                <p class="description">Esta herramienta calcula el momento resistente de una viga de concreto armado basado en sus dimensiones y propiedades materiales.</p>
+                
+                <div class="diagram-container">
+                    <img src="img/viga-diagrama.png" alt="Diagrama de una viga" class="viga-diagram">
+                </div>
+                
+                <form id="calculoForm">
+                    <div class="form-group">
+                        <label for="baseViga">Base de la viga (cm):</label>
+                        <input type="number" id="baseViga" min="10" max="100" step="0.1" value="25" required>
+                        <span class="hint">Ancho de la sección transversal</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="alturaViga">Altura de la viga (cm):</label>
+                        <input type="number" id="alturaViga" min="15" max="200" step="0.1" value="50" required>
+                        <span class="hint">Altura total de la sección transversal</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="distBarraSup">Distancia a barra superior (cm):</label>
+                        <input type="number" id="distBarraSup" min="3" max="20" step="0.1" value="5" required>
+                        <span class="hint">Distancia del borde superior al centro de la barra de compresión</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="distBarraInf">Distancia a barra inferior (cm):</label>
+                        <input type="number" id="distBarraInf" min="3" max="20" step="0.1" value="5" required>
+                        <span class="hint">Distancia del borde inferior al centro de la barra de tracción</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fc">Resistencia del concreto f'c (kg/cm²):</label>
+                        <input type="number" id="fc" min="140" max="500" step="1" value="210" required>
+                        <span class="hint">Típicamente 210 kg/cm² para concreto normal</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fy">Esfuerzo de fluencia del acero fy (kg/cm²):</label>
+                        <input type="number" id="fy" min="2800" max="6000" step="1" value="4200" required>
+                        <span class="hint">Típicamente 4200 kg/cm² para acero de refuerzo</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="aceroTraccion">Área de acero a tracción (cm²):</label>
+                        <input type="number" id="aceroTraccion" min="0.1" max="100" step="0.01" value="10" required>
+                        <span class="hint">Área total de las barras de refuerzo a tracción (inferior)</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="aceroCompresion">Área de acero a compresión (cm²):</label>
+                        <input type="number" id="aceroCompresion" min="0" max="100" step="0.01" value="5" required>
+                        <span class="hint">Área total de las barras de refuerzo a compresión (superior)</span>
+                    </div>
+                    
+                    <div class="actions-row">
+                        <button type="button" class="btn-calcular" id="btnCalcular">Calcular Momento</button>
+                        <button type="reset" class="btn-reset">Limpiar</button>
+                    </div>
+                </form>
+                
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Calculando resultados...</p>
+                </div>
+                
+                <div class="resultado" id="resultado">
+                    <h3>Resultado del Cálculo</h3>
+                    <div class="resultado-content">
+                        <p><strong>Momento resistente:</strong> <span id="valor-momento">0.00</span> <span id="unidad-momento">kN·m</span></p>
+                        
+                        <div class="resultado-extra" id="resultadoExtra">
+                            <p><strong>Coeficiente de resistencia (φ):</strong> <span id="valor-phi">0.00</span></p>
+                            <p><strong>Distancia al eje neutro (c):</strong> <span id="valor-c">0.00</span> cm</p>
+                            <p><strong>Deformación unitaria a tracción (εst):</strong> <span id="valor-est">0.00</span></p>
+                            <p id="tipo-falla-container"><strong>Tipo de falla:</strong> <span id="tipo-falla">-</span></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="error" id="error">
+                    <h3>Error en el cálculo</h3>
+                    <p id="mensaje-error"></p>
+                    <p>Por favor revise los datos ingresados e intente nuevamente.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Proyecto Energía - Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    <script src="js/calculoMomento.js"></script>
+</body>
+</html>
